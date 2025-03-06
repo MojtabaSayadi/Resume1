@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Resume1.Ioc\Resume1.Ioc.csproj" />
+  </ItemGroup>
+
 </Project>
