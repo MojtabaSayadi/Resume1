@@ -1,8 +1,24 @@
+using Microsoft.EntityFrameworkCore;
+using Resume1.core.Services.Implementation;
+using Resume1.core.Services.Interfaces;
+using Resume1.Data.Context;
+using Resume1.Data.Repositories;
+using Resume1.domain.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+#region Add Db Context
+builder.Services.AddDbContext<Resume1Context>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Myconnection"));
+});
+#endregion
+builder.Services.AddScoped<IUserService ,UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
