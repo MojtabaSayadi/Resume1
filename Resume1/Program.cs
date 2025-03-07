@@ -4,6 +4,7 @@ using Resume1.core.Services.Interfaces;
 using Resume1.Data.Context;
 using Resume1.Data.Repositories;
 using Resume1.domain.Interfaces;
+using Resume1.Ioc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +17,9 @@ builder.Services.AddDbContext<Resume1Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Myconnection"));
 });
 #endregion
-builder.Services.AddScoped<IUserService ,UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.RegisterServices();
+//builder.Services.AddScoped<IUserService ,UserService>();
+//builder.Services.AddScoped<IUserRepository, UserRepository>();
     
 var app = builder.Build();
 
