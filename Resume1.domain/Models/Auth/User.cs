@@ -11,11 +11,11 @@ namespace Resume1.domain.Models.Auth
      {
         [Key]
         public int Id { get; set; }
-        [Required]
-        [MaxLength(50)]
+        [Required(ErrorMessage =" Please FullName ")]
+        [MaxLength(10,ErrorMessage =" FullName is too long ")]
         public string FullName { get; set; }
-        [Required]
-        [MaxLength(20)]
+        [Required(ErrorMessage ="Please Password ")]
+        [MaxLength(10,ErrorMessage ="Password is too long ")]
         public string Password { get; set; }
     }
 }

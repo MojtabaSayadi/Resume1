@@ -3,7 +3,7 @@
 @model List<User>
 
 <div>
-	<table>
+	<table class="table table-bordered">
 		<tr>
 			<th>
 				#
@@ -14,6 +14,12 @@
 			<th>
 				Password
 			</th>
+			<td>
+				<a href="/CreateUser" class ="btn btn-info ">
+					Add User
+
+				</a>
+			</td>
 		</tr>
 		@if(Model.Any())
 		{
@@ -29,14 +35,17 @@
 					<td>
 						@item.Password
 					</td>
+					<td>
+
+					</td>
 					
 				</tr>
 				}
 			}
 			else
 			{
-				<tr>
-					<td colspan="3">
+				<tr style="text-align:center " >
+					<td colspan="4">
 						No Data Found
 
 					</td>
