@@ -13,6 +13,9 @@ namespace Resume1.Controllers
         {
                 userService = _userService;
         }
+
+        #region CreateUser
+
         [HttpGet("ShowUser")]
         public ActionResult ShowUser()
         {
@@ -38,6 +41,61 @@ namespace Resume1.Controllers
             }
 
         }
+        #endregion
+
+        #region EditUser
+        [HttpGet("EditUser/{Id}")]
+        public IActionResult EditUser(int Id)
+        {
+            if (Id > 0)
+            {
+                if (userService.IsExist(Id))
+                {
+                    User user=userService.GetUserById(Id);
+                    return View(user);
+                }
+                else
+                {
+                    // Id not found !
+                    return RedirectToAction("ShowUser");
+                }
+            }
+            else
+            {
+                // Id not found !
+                return RedirectToAction("ShowUser");
+            
+            }
+
+        }
+
+        [Route("EditUser")]
+        [Route("EditUser/{id}")]
+        [HttpPost]
+        public IActionResult EditUser(User model)
+        {
+            User user = userService.GetUserById(model.Id);
+            if (user == null)
+            {
+                return RedirectToAction("ShowUser");
+            }
+            else
+            {
+                bool isChanged = false;
+                if (!user.FullName.Equals(model.FullName))
+                    user.FullName = model.FullName;
+                isChanged = true;
+                if (!user.Password.Equals(model.Password))
+                    user.Password = model.Password;
+                isChanged = true;
+                if (isChanged)
+                    userService.UpdateUser(user);
+
+                return RedirectToAction("ShowUser");
+
+            }
+        }
+        #endregion
 
     }
 }

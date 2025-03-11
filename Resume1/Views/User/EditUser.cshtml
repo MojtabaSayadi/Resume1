@@ -1,11 +1,11 @@
 ﻿@model User
 
 <div>
-	<form  asp-action="CreateUser"  asp-controller="User" method="post">
+	<form asp-action="EditUser" asp-controller="User" method="post">
 		<div class="form-group">
 			<label> User name </label>
 			<input asp-for="FullName" class="form-control" placeholder="Enter FullName " />
-			<br/>
+			<br />
 
 			<span asp-validation-for="FullName" class="text-danger">    </span>
 
@@ -13,17 +13,18 @@
 		<div class="form-group mt-2">
 			<label> Password </label>
 			<input asp-for="Password" class="form-control" placeholder="Enter Password " />
-			<br/>
+			<br />
 			<span asp-validation-for="Password" class="text-danger">   </span>
 
 		</div>
 		<div class="container mt-2">
 			<button class="btn btn-secondary" type="submit"> Save </button>
-			<a href="/ShowUser" class="btn btn-info" > Back </a>
+			<a href="/ShowUser" class="btn btn-info"> Back </a>
 
 		</div>
-		
-		
+
+
 	</form>
 
 </div>
+

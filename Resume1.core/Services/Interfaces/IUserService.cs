@@ -11,6 +11,7 @@ namespace Resume1.core.Services.Interfaces
     {
         User GetUserById(int id);
         List<User> GetUsers();
+        bool IsExist(int Id);
         void AddUser(User user);
         void UpdateUser(User user);
         void DeleteUser(int id);

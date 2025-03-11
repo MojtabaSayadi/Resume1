@@ -44,6 +44,11 @@ namespace Resume1.core.Services.Implementation
             return userRpository.GetAll();
         }
 
+        public bool IsExist(int Id)
+        {
+            return userRpository.IsExist(Id);
+        }
+
         public void SaveUser()
         {
             userRpository.Save();

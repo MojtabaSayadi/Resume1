@@ -11,6 +11,7 @@ namespace Resume1.domain.Interfaces
     {
         User GetById(int id);
         List<User> GetAll();
+        bool IsExist(int Id);
         void Add(User user);
         void Update(User user);
         void Delete(int id);
