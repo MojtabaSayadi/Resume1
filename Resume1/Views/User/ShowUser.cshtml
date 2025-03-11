@@ -1,6 +1,14 @@
 ﻿@using Resume1.domain.Models.Auth;
 
 @model List<User>
+@if(ViewBag.SuccessMessage != null)
+{
+	<input type="hidden" name="SuccessId" id="SuccessId" value="@ViewBag.SuccessMessage"/>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+	<input type="hidden" name="ErrorId"   id="ErrorId"   value="@ViewBag.ErrorMessage" />
+}
 
 <div>
 	<table class="table table-bordered">
@@ -57,5 +65,37 @@
 		</table>
 
 	</div>
+	@section Scripts{
+		<script>
+			window.onload=function(){
+				//alert(" mamad ")
+				var SuccessField = document.getElementById("SuccessId");
+				if(SuccessField && SuccessField.value.trim() !=="")
+				//alert(SuccessField.value);
+				Swal.fire({
+					title:'بپریم',
+				     text:SuccessField.value,
+					type:'success',
+					confirmButtonClass:'btn btn-success',
+				confirmButtonText :'ok'
+							
+				});
+
+			    var ErrorFiled = document.getElementById("ErrorId");
+		        if(ErrorFiled && ErrorFiled.value.trim() !== "")
+			    //alert(ErrorFiled.value);
+					Swal.fire({
+				title:'هشدار',
+			 text:ErrorFiled.value,
+				type:'error',
+				confirmButtonClass:'btn btn-warning',
+			confirmButtonText :'ok'
+
+			});
+
+			};
+
+		</script>
+	}
 
  

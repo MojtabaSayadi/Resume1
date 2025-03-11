@@ -14,14 +14,22 @@ namespace Resume1.Controllers
                 userService = _userService;
         }
 
-        #region CreateUser
+        
 
         [HttpGet("ShowUser")]
-        public ActionResult ShowUser()
+        public ActionResult ShowUser(string SuccessMessage,string ErrorMessage)
         {
+            if(!string.IsNullOrEmpty(SuccessMessage))
+                ViewBag.SuccessMessage = SuccessMessage;
+
+            if(!string.IsNullOrEmpty(ErrorMessage))
+                ViewBag.ErrorMessage = ErrorMessage;
+
             List<User> users=userService.GetUsers();
             return View(users);
         }
+
+        #region CreateUser
         [HttpGet("CreateUser")]
         public ActionResult CreateUser()
         {
@@ -89,9 +97,18 @@ namespace Resume1.Controllers
                     user.Password = model.Password;
                 isChanged = true;
                 if (isChanged)
-                    userService.UpdateUser(user);
+                {
 
-                return RedirectToAction("ShowUser");
+                    userService.UpdateUser(user);
+                    return RedirectToAction("ShowUser","User",new { SuccessMessage = "User added successFully " });
+                }
+                else
+                {
+
+                    return RedirectToAction("ShowUser", "User", new { ErrorMessage = "User not added " });
+                }
+
+              
 
             }
         }
