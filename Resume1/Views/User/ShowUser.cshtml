@@ -1,13 +1,13 @@
 ﻿@using Resume1.domain.Models.Auth;
 
 @model List<User>
-@if(ViewBag.SuccessMessage != null)
+@if (ViewBag.SuccessMessage != null)
 {
-	<input type="hidden" name="SuccessId" id="SuccessId" value="@ViewBag.SuccessMessage"/>
+	<input type="hidden" name="SuccessId" id="SuccessId" value="@ViewBag.SuccessMessage" />
 }
 @if (ViewBag.ErrorMessage != null)
 {
-	<input type="hidden" name="ErrorId"   id="ErrorId"   value="@ViewBag.ErrorMessage" />
+	<input type="hidden" name="ErrorId" id="ErrorId" value="@ViewBag.ErrorMessage" />
 }
 
 <div>
@@ -23,19 +23,19 @@
 				Password
 			</th>
 			<td>
-				<a href="\CreateUser" class ="btn btn-info ">
+				<a href="\CreateUser" class="btn btn-info ">
 					Add User
 
 				</a>
 			</td>
 		</tr>
-		@if(Model.Any())
+		@if (Model.Any())
 		{
 			foreach (var item in Model)
 			{
 				<tr>
 					<td>
-					  @item.Id
+						@item.Id
 					</td>
 					<td>
 						@item.FullName
@@ -46,56 +46,108 @@
 					<td>
 						<a class="btn btn-warning" href="\EditUser\@item.Id">
 							Edit User
-
 						</a>
+						<button class="btn btn-danger" onclick="confirm('@item.Id','@item.FullName')">
+							Delete User
+						</button>
 					</td>
-					
-				</tr>
-				}
-			}
-			else
-			{
-				<tr style="text-align:center " >
-					<td colspan="4">
-						No Data Found
 
-					</td>
 				</tr>
 			}
-		</table>
+		}
+		else
+		{
+			<tr style="text-align:center ">
+				<td colspan="4">
+					No Data Found
 
-	</div>
-	@section Scripts{
-		<script>
-			window.onload=function(){
-				//alert(" mamad ")
-				var SuccessField = document.getElementById("SuccessId");
-				if(SuccessField && SuccessField.value.trim() !=="")
-				//alert(SuccessField.value);
-				Swal.fire({
-					title:'بپریم',
-				     text:SuccessField.value,
-					type:'success',
-					confirmButtonClass:'btn btn-success',
-				confirmButtonText :'ok'
-							
-				});
+				</td>
+			</tr>
+		}
+	</table>
 
-			    var ErrorFiled = document.getElementById("ErrorId");
-		        if(ErrorFiled && ErrorFiled.value.trim() !== "")
-			    //alert(ErrorFiled.value);
+</div>
+@section Scripts {
+	<script>
+		function confirm(Id,user){
+		Swal.fire({
+			title:'هشدار',
+			text:"Are you sure to delete :"+user,
+			type:'warning',
+			showCancelButton:true,
+			confirmButtonClass:'btn btn-warning',
+			confirmButtonText :'Sure',
+			cancelButtonText :'No',
+			cancelButtonClass :'btn btn-danger',
+			buttonStyle:false
+	   	}).then(function(result){
+
+			if(result.value){
+				$.ajax({
+					method:'post',
+					url:'/DeleteUser',
+					data:{id:Id},
+					beforesend :function(){
+
+					},
+					success:function(response){
+					 Swal.fire({
+							 title:'تبریک',
+							  text:SuccessField.value,
+							  type:'success',
+							  confirmButtonClass:'btn btn-success',
+							   confirmButtonText :'ok'
+					 }).then(function(result2){
+						location.reload();
+					 });
+					},
+					Error:function(response){
 					Swal.fire({
-				title:'هشدار',
-			 text:ErrorFiled.value,
-				type:'error',
-				confirmButtonClass:'btn btn-warning',
+							 title:'stop',
+							  text:response.responseText,
+							  type:'error',
+							  confirmButtonClass:'btn btn-success',
+							   confirmButtonText :'ok'
+					});
+					console.log(response.responseText);
+					}
+				});
+			}
+			else{
+
+			}
+
+			}
+
+		window.onload=function(){
+			//alert(" mamad ")
+			var SuccessField = document.getElementById("SuccessId");
+			if(SuccessField && SuccessField.value.trim() !=="")
+			//alert(SuccessField.value);
+			Swal.fire({
+				title:'تبریک',
+				 text:SuccessField.value,
+				type:'success',
+				confirmButtonClass:'btn btn-success',
 			confirmButtonText :'ok'
 
 			});
 
-			};
+			var ErrorFiled = document.getElementById("ErrorId");
+			if(ErrorFiled && ErrorFiled.value.trim() !== "")
+			//alert(ErrorFiled.value);
+				Swal.fire({
+		    	title:'هشدار',
+		        text:ErrorFiled.value,
+			   type:'error',
+			   confirmButtonClass:'btn btn-warning',
+		       confirmButtonText :'ok'
 
-		</script>
-	}
+		        });
 
- 
+		};
+
+	</script>
+}
+
+

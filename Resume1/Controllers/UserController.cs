@@ -1,31 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Resume1.core.Services.Implementation;
 using Resume1.core.Services.Interfaces;
 using Resume1.domain.Models.Auth;
 
 namespace Resume1.Controllers
 {
-    public class UserController: Controller
+    public class UserController : Controller
     {
-        private IUserService  userService;
+        private IUserService userService;
 
         public UserController(IUserService _userService)
         {
-                userService = _userService;
+            userService = _userService;
         }
 
-        
+
 
         [HttpGet("ShowUser")]
-        public ActionResult ShowUser(string SuccessMessage,string ErrorMessage)
+        public ActionResult ShowUser(string SuccessMessage, string ErrorMessage)
         {
-            if(!string.IsNullOrEmpty(SuccessMessage))
+            if (!string.IsNullOrEmpty(SuccessMessage))
                 ViewBag.SuccessMessage = SuccessMessage;
 
-            if(!string.IsNullOrEmpty(ErrorMessage))
+            if (!string.IsNullOrEmpty(ErrorMessage))
                 ViewBag.ErrorMessage = ErrorMessage;
 
-            List<User> users=userService.GetUsers();
+            List<User> users = userService.GetUsers();
             return View(users);
         }
 
@@ -59,7 +60,7 @@ namespace Resume1.Controllers
             {
                 if (userService.IsExist(Id))
                 {
-                    User user=userService.GetUserById(Id);
+                    User user = userService.GetUserById(Id);
                     return View(user);
                 }
                 else
@@ -72,7 +73,7 @@ namespace Resume1.Controllers
             {
                 // Id not found !
                 return RedirectToAction("ShowUser");
-            
+
             }
 
         }
@@ -100,7 +101,7 @@ namespace Resume1.Controllers
                 {
 
                     userService.UpdateUser(user);
-                    return RedirectToAction("ShowUser","User",new { SuccessMessage = "User added successFully " });
+                    return RedirectToAction("ShowUser", "User", new { SuccessMessage = "User added successFully " });
                 }
                 else
                 {
@@ -108,8 +109,41 @@ namespace Resume1.Controllers
                     return RedirectToAction("ShowUser", "User", new { ErrorMessage = "User not added " });
                 }
 
-              
 
+
+            }
+        }
+        #endregion
+        #region Delete User
+        [HttpPost("DeleteUser")]
+        public IActionResult DeleteUser(int id)
+        {
+            try
+            {
+                if(id > 0)
+                {
+                    User user = userService.GetUserById(id);
+                    if(user != null)
+                    {
+                        userService.DeleteUsers(user);
+                        return Ok("Deleted successfully ");//// 200
+                    }
+                    else
+                    {
+                        return BadRequest("error , user not found");
+                    }
+
+
+                }
+                else
+                {
+                    return BadRequest("error , user not found");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("error : "+ex.Message.ToList());//// 400
             }
         }
         #endregion
