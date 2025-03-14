@@ -19,6 +19,7 @@ namespace Resume1.Data.Context
 
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Address> addresses { get; set; }
     }
 }
  

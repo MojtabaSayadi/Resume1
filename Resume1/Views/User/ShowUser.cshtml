@@ -47,7 +47,7 @@
 						<a class="btn btn-warning" href="\EditUser\@item.Id">
 							Edit User
 						</a>
-						<button class="btn btn-danger" onclick="confirm('@item.Id','@item.FullName')">
+						<button class="btn btn-danger" onclick="confirm('@item.Id','@item.FullName') ">
 							Delete User
 						</button>
 					</td>
@@ -60,7 +60,6 @@
 			<tr style="text-align:center ">
 				<td colspan="4">
 					No Data Found
-
 				</td>
 			</tr>
 		}
@@ -69,7 +68,7 @@
 </div>
 @section Scripts {
 	<script>
-		function confirm(Id,user){
+		function confirm(ID,user){
 		Swal.fire({
 			title:'هشدار',
 			text:"Are you sure to delete :"+user,
@@ -86,7 +85,7 @@
 				$.ajax({
 					method:'post',
 					url:'/DeleteUser',
-					data:{id:Id},
+					data:{id:ID},
 					beforesend :function(){
 
 					},

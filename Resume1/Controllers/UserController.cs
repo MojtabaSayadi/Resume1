@@ -114,6 +114,7 @@ namespace Resume1.Controllers
             }
         }
         #endregion
+
         #region Delete User
         [HttpPost("DeleteUser")]
         public IActionResult DeleteUser(int id)
