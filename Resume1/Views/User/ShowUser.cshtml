@@ -50,6 +50,9 @@
 						<button class="btn btn-danger" onclick="confirm('@item.Id','@item.FullName') ">
 							Delete User
 						</button>
+						<a class="btn btn-primary" href="\AddressMng\@item.Id">
+							Add Address
+						</a>
 					</td>
 
 				</tr>
@@ -69,7 +72,11 @@
 @section Scripts {
 	<script>
 		function confirm(ID,user){
-		Swal.fire({
+			console.log('ID ',ID);;
+			console.log('user',user);
+
+
+			Swal.fire({
 			title:'هشدار',
 			text:"Are you sure to delete :"+user,
 			type:'warning',
@@ -79,7 +86,7 @@
 			cancelButtonText :'No',
 			cancelButtonClass :'btn btn-danger',
 			buttonStyle:false
-	   	}).then(function(result){
+		}).then(function(result){
 
 			if(result.value){
 				$.ajax({
@@ -100,7 +107,7 @@
 						location.reload();
 					 });
 					},
-					Error:function(response){
+					error:function(response){
 					Swal.fire({
 							 title:'stop',
 							  text:response.responseText,
@@ -113,10 +120,11 @@
 				});
 			}
 			else{
-
+				console.log("else");
 			}
-
-			}
+		})
+		}
+		
 
 		window.onload=function(){
 			//alert(" mamad ")
@@ -136,13 +144,13 @@
 			if(ErrorFiled && ErrorFiled.value.trim() !== "")
 			//alert(ErrorFiled.value);
 				Swal.fire({
-		    	title:'هشدار',
-		        text:ErrorFiled.value,
+				title:'هشدار',
+				text:ErrorFiled.value,
 			   type:'error',
 			   confirmButtonClass:'btn btn-warning',
-		       confirmButtonText :'ok'
+			   confirmButtonText :'ok'
 
-		        });
+				});
 
 		};
 

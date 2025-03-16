@@ -1,0 +1,100 @@
+﻿@using Resume1.domain.ViewModel.Address
+@model AddressViewModel
+@{
+	User user = new User();
+	if(ViewBag.user != null ){
+		user = ViewBag.user;
+	}
+	List<Address> addrresses = new List<Address>();
+	if(ViewBag.Address != null){
+		addrresses = ViewBag.Address as List<Address> ;
+	} 
+
+}
+<div id=" header">
+	@if(user != null){
+		<div class="row">
+
+		  <div class=" col-6">
+			  <h2>
+				  UserName :
+			  </h2>
+			  <span>
+				  @user.FullName
+			  </span>
+		 </div>
+			<div class=" col-6">
+				<h2>
+					Password :
+				</h2>
+				<span>
+					@user.Password
+				</span>
+			</div>
+
+		</div>
+	}
+
+</div>
+<div id="input">
+	<form asp-action="AddressMng" asp-controller="Address" method="post">
+		<input type="hidden" asp-for="UserId" value="@user.Id"/>
+		<div>
+
+			<label class="form-label"> Address  </label>
+			<textarea class="form-control" asp-for ="AddressContent" rows="3">   </textarea>
+		</div>
+		<span asp-validation-for="AddressContent" class="text-danger">   </span>
+		<button type ="submit" class="btn btn-success" >
+			Save
+		</button>
+		<a  class ="btn btn-dark" href="/ShowUser">
+		Back
+		</a>
+
+
+	</form>
+
+
+</div>
+<div id="response">
+	<table class="table table-bordered">
+		<tr>
+			<th>
+
+			</th>
+			<th>
+
+			</th>
+			<th>
+
+			</th>
+		</tr>
+		@if(addrresses.Count>0){
+
+			foreach (var item in addrresses)
+			{
+				<tr>
+					<td>
+						@item.Id
+					</td>
+					<td>
+						@item.AddressContent
+					</td>
+
+				</tr>
+			}
+
+		}
+		else{
+			<tr>
+				<td colspan="3">
+					No Address 
+
+				</td>
+			</tr>
+		}
+
+	</table>
+
+</div>
