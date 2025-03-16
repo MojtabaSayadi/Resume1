@@ -20,6 +20,8 @@ namespace Resume1.Data.Context
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Address> addresses { get; set; }
+        public DbSet<Role> roles { get; set; }
+        public DbSet<UserRole> userRoles { get; set; }
     }
 }
  

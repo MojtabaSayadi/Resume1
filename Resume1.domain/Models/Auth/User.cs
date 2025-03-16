@@ -14,6 +14,7 @@ namespace Resume1.domain.Models.Auth
         public string Password { get; set; }
         #region Relation
         public List<Address> addresses { get; set; }
+        public List<UserRole> userRoles { get; set; }
         #endregion
 
     }
